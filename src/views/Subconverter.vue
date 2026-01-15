@@ -4,7 +4,7 @@
       <el-col>
         <el-card>
           <div slot="header">
-            Subscription Converter
+            订阅转换
             <svg-icon icon-class="github" style="margin-left: 20px" @click="goToProject" />
 
             <div style="display: inline-block; position:absolute; right: 20px">{{ backendVersion }}</div>
@@ -26,12 +26,12 @@
               </el-form-item>
 
               <div v-if="advanced === '2'">
-                <el-form-item label="后端地址:">
+                <!-- <el-form-item label="后端地址:">
                   <el-autocomplete style="width: 100%" v-model="form.customBackend" :fetch-suggestions="backendSearch"
                     placeholder="动动小手，（建议）自行搭建后端服务。例：http://127.0.0.1:25500/sub?">
                     <el-button slot="append" @click="gotoGayhub" icon="el-icon-link">前往项目仓库</el-button>
                   </el-autocomplete>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="远程配置:">
                   <el-select v-model="form.remoteConfig" allow-create filterable placeholder="请选择" style="width: 100%">
                     <el-option-group v-for="group in options.remoteConfig" :key="group.label" :label="group.label">
@@ -101,12 +101,12 @@
                       </el-row>
                       <el-button slot="reference">定制功能</el-button>
                     </el-popover>
-                    <el-popover placement="top-end" title="添加自定义转换参数" trigger="hover">
+                    <!-- <el-popover placement="top-end" title="添加自定义转换参数" trigger="hover">
                       <el-link type="primary" :href="subDocAdvanced" target="_blank" icon="el-icon-info">参考文档</el-link>
                       <el-button slot="reference" @click="addCustomParam" style="margin-left: 10px">
                         <i class="el-icon-plus"></i>
                       </el-button>
-                    </el-popover>
+                    </el-popover> -->
                   </el-row>
                 </el-form-item>
               </div>
@@ -123,12 +123,12 @@
                     icon="el-icon-document-copy">复制</el-button>
                 </el-input>
               </el-form-item>
-              <el-form-item label="订阅短链:">
+              <!-- <el-form-item label="订阅短链:">
                 <el-input class="copy-content" disabled v-model="curtomShortSubUrl">
                   <el-button slot="append" v-clipboard:copy="curtomShortSubUrl" v-clipboard:success="onCopy"
                     ref="copy-btn" icon="el-icon-document-copy">复制</el-button>
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
 
               <!-- 操作按钮组 -->
               <el-form-item label-width="0px" style="margin-top: 40px; text-align: center">
@@ -139,17 +139,25 @@
                   :disabled="!canGenerateUrl">
                   生成订阅链接
                 </el-button>
-                <el-button
+                <!-- <el-button
                   :style="buttonStyle"
                   type="danger"
                   @click="makeShortUrlClick"
                   :loading="loading"
                   :disabled="!canGenerateShortUrl">
                   生成短链接
+                </el-button> -->
+                <el-button
+                  :style="buttonStyle"
+                  type="primary"
+                  @click="clashInstall"
+                  icon="el-icon-connection"
+                  :disabled="!canImportClash">
+                  一键导入 Clash
                 </el-button>
               </el-form-item>
 
-              <el-form-item label-width="0px" style="text-align: center">
+              <!-- <el-form-item label-width="0px" style="text-align: center">
                 <el-button
                   :style="buttonStyle"
                   type="primary"
@@ -166,7 +174,7 @@
                   :disabled="!canImportClash">
                   一键导入 Clash
                 </el-button>
-              </el-form-item>
+              </el-form-item> -->
 
               <el-form-item label-width="0px" style="text-align: center">
                 <el-button
@@ -288,7 +296,7 @@ export default {
     }
   },
   created() {
-    document.title = "Subscription Converter";
+    document.title = "订阅转换";
     this.isPC = this.$getOS().isPc;
 
     // 获取 url cache
@@ -462,19 +470,19 @@ export default {
       this.backendVersion = await BackendService.getBackendVersion(this.$axios);
     },
 
-    notify() {
-      const h = this.$createElement;
+    // notify() {
+    //   const h = this.$createElement;
 
-      this.$notify({
-        title: "隐私提示",
-        type: "warning",
-        message: h(
-          "i",
-          { style: "color: teal" },
-          "各种订阅链接（短链接服务除外）生成纯前端实现，无隐私问题。默认提供后端转换服务，隐私担忧者请自行搭建后端服务。"
-        )
-      });
-    },
+    //   this.$notify({
+    //     title: "隐私提示",
+    //     type: "warning",
+    //     message: h(
+    //       "i",
+    //       { style: "color: teal" },
+    //       "各种订阅链接（短链接服务除外）生成纯前端实现，无隐私问题。默认提供后端转换服务，隐私担忧者请自行搭建后端服务。"
+    //     )
+    //   });
+    // },
 
     // 表单相关方法
     saveSubUrl() {
